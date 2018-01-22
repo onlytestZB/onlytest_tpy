@@ -24,5 +24,7 @@ def show_buy_lower(stock_ind):
 
 profit = 0
 for stock_ind in stock_lower_array:
-    profit +=show_buy_lower(stock_ind)
+    tmp_profit = show_buy_lower(stock_ind)
+    print('买入第{}只股票，从454个交易日开始持有盈亏:{:.2f}%'.format(stock_ind, tmp_profit))
+    profit += tmp_profit
 print('买入第{}只股票，从454个交易日开始持有盈亏:{:.2f}%'.format(stock_lower_array,profit))
