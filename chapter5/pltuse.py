@@ -14,6 +14,21 @@ def plot_demo(axs = None,just_series = False):
     plt.ylabel('close')
     plt.title('TSLA CLOSE')
     plt.grid(True)
-    plt.show()
 
-plot_demo()
+
+_,axs = plt.subplots(nrows=2,ncols=2,figsize=(14,10))
+drawer = axs[0][0]
+plot_demo(drawer)
+drawer.legend(['Series','Numpy','List'],loc=0)
+drawer = axs[0][1]
+plot_demo(drawer)
+drawer.legend(['Series','Numpy','List'],loc=1)
+drawer= axs[1][0]
+plot_demo(axs[1][0])
+plot_demo(drawer)
+drawer.legend(['Series','Numpy','List'],loc=2)
+drawer=axs[1][1]
+plot_demo(drawer)
+drawer.legend(['Series','Numpy','List'],bbox_to_anchor=(1.05,1),loc=2,
+              borderaxespad=0.)
+plt.show()
