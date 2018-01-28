@@ -24,8 +24,8 @@ pd.rolling_mean(tsla_df.close,window=60).plot()
 pd.rolling_mean(tsla_df.close,window=90).plot()
 plt.legend(['close','30 mv','60 mv','90 mv'],loc='best')
 plt.show()
-'''
 
+5.3.3
 low_to_high_df = tsla_df.iloc[tsla_df[
     (tsla_df.close>tsla_df.open)&(tsla_df.key!=(tsla_df.shape[0]-1))].key.values+1]
 change_ceil_floor  = np.where(low_to_high_df['p_change']>0,
@@ -45,4 +45,24 @@ change_ceil_floor.value_counts().plot(kind='barh',ax=axs[0][1])
 change_ceil_floor.value_counts().plot(kind='kde',ax=axs[1][0])
 change_ceil_floor.value_counts().plot(kind='pie',ax=axs[1][1])
 plt.show()
+'''
+import seaborn as sns
 
+#sns.distplot(tsla_df['p_change'],bins=80)
+#sns.boxplot(x='date_week',y='p_change',data=tsla_df)
+#sns.jointplot(tsla_df['high'],tsla_df['low'])
+change_df = pd.DataFrame({'tsla':tsla_df.p_change})
+change_df = change_df.join(pd.DataFrame({'good':ABuSymbolPd.make_kl_df(
+    'usGOOG',n_folds=2).p_change}),how='outer')
+change_df = change_df.join(pd.DataFrame({'aapl':ABuSymbolPd.make_kl_df(
+    'usAAPL',n_folds=2).p_change}),how='outer')
+change_df = change_df.join(pd.DataFrame({'fb':ABuSymbolPd.make_kl_df(
+    'usFB',n_folds=2).p_change}),how='outer')
+change_df = change_df.join(pd.DataFrame({'bidu':ABuSymbolPd.make_kl_df(
+    'usBIDU',n_folds=2).p_change}),how='outer')
+change_df = change_df.dropna()
+print(change_df.head())
+corr = change_df.corr()
+_,ax = plt.subplots(figsize=(8,5))
+sns.heatmap(corr,ax=ax)
+plt.show()
