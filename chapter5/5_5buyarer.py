@@ -26,5 +26,16 @@ def plot_trade(buy_date,sell_date):
     plt.ylim(np.min(tsla_df['close'])-5,
              np.max(tsla_df['close'])+5)
     plt.legend(['close'],loc='best')
-plot_trade('2017-02-01','2017-05-05')
+def plot_trade_with_annotate(buy_date,sell_date,anntate):
+    '''
+        :param buy_date: 交易买入日期
+        :param sell_date: 交易卖出日期
+        :param annotate: 卖出原因
+        :return:
+    '''
+    plot_trade(buy_date,sell_date)
+    plt.annotate(anntate,xy=(sell_date,tsla_df['close'].asof(sell_date)),arrowprops=dict(facecolor='yellow'),
+                 horizontalalignment='left',verticalalignment='top')
+plot_trade_with_annotate('2017-02-01','2017-05-05','sell for stop loss')
+
 plt.show()
